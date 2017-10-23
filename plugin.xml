@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-vlc" version="0.1.0" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>PluginTest</name>
+    <js-module name="PluginVLC" src="www/PluginVLC.js">
+        <clobbers target="PluginVLC" />
+    </js-module>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="PluginVLC">
+                <param name="ios-package" value="PluginVLC" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/itriVLClib.h"/>
+        <source-file src="src/ios/libitriVLClib.a" framework="true" />
+        <header-file src="src/ios/PluginVLC-Bridging-Header.h"/>
+        <source-file src="src/ios/PluginVLC.swift" />
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>$CAMERA_USAGE_DESCRIPTION</string>
+        </config-file>
+        <preference name="CAMERA_USAGE_DESCRIPTION" default="Need camera to scan"/>
+    </platform>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="PluginVLC">
+                <param name="android-package" value="cordova.plugin.vlc.PluginVLC" />
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.CAMERA"/>
+            <uses-feature android:name="android.hardware.camera" android:required="true"/>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="itri.icl.k400.vlcid.app.Camera2Main" android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml"></config-file>
+        <source-file src="src/android/res/layout/activity_camera2.xml" target-dir="res/layout"/>
+        <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
+        <source-file src="src/android/res/values/dimens.xml" target-dir="res/values"/>
+        <source-file src="src/android/res/values/colors.xml" target-dir="res/values"/>
+        <source-file src="src/android/PluginVLC.java" target-dir="src/cordova/plugin/vlc/PluginVLC" />
+        <source-file src="src/android/Camera2Main.java" target-dir="src/itri/icl/k400/vlcid/app" />
+        <source-file src="src/android/UtilS.java" target-dir="src/itri/icl/k400/vlcid/app" />
+        <source-file src="src/android/VlcIdAns.java" target-dir="src/itri/icl/k400/vlcid/libAns" />
+        <source-file src="src/android/VlcIdRec.java" target-dir="src/itri/icl/k400/vlcid/libAns" />
+        <resource-file src="src/android/libDecoder-release.aar" target="libs/libDecoder.aar" />
+        <resource-file src="src/android/res/drawable/qr_code_bg.9.png" target="res/drawable/qr_code_bg.9.png" />
+        <resource-file src="src/android/res/drawable/scan_line.png" target="res/drawable/scan_line.png" />
+        <resource-file src="src/android/res/drawable/shadow.png" target="res/drawable/shadow.png" />
+        <resource-file src="src/android/res/drawable/vlc_1024.png" target="res/drawable/vlc_1024.png" />
+        <framework src="src/android/pluginvlc.gradle" custom="true" type="gradleReference"/>
+    </platform>
+</plugin>
